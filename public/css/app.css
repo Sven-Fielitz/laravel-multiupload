@@ -1,0 +1,18 @@
+/*
+    Cumulative Layout Shift fix
+*/
+.dropzone:not(.dz-clickable) {
+
+    width: 326px;
+    height: 112px;
+
+}
+
+/*
+    DataTable auf volle Div Größe ziehen
+*/
+div#UploadedFiles_wrapper {
+
+    width: 100% !important;
+
+}
