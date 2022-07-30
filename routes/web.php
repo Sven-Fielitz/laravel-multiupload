@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UploadController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +18,10 @@ Route::get('/', function () {
     return view('index');
 });
 
+Route::prefix('api/upload/file')->controller(UploadController::class)->group(function () {
 
-Route::post('/upload', function () {
-})->name('upload');
+    Route::post('/receive', 'receive')->name('file.upload');
+
+    Route::post('/announce', 'announce')->name('file.announce');
+
+});
