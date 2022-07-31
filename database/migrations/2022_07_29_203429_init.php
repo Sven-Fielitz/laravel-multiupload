@@ -18,12 +18,13 @@ return new class extends Migration
         Schema::create('files', function (Blueprint $table) {
             $table->id();
             $table->string('orginal_filename');
-            $table->string('filename')->nullable();
-            $table->string('title')->nullable();
-            $table->enum('status', ['ANNOUNCED', 'UPLOADING', 'COMPLETED', 'CORRUPTED']);
+            $table->string('filename')->nullable()->unique();
+            $table->string('filetype')->nullable()->index();
+            $table->enum('status', ['ANNOUNCED', 'UPLOADING', 'COMPLETED', 'CORRUPTED'])->index();
             $table->text('comment')->nullable();
             $table->bigInteger("uploadedSize")->default(0);
             $table->bigInteger("fileSize");
+            $table->timestamp("uploaded_at")->nullable();
             $table->timestamps();
         });
     }
