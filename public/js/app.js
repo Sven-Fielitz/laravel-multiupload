@@ -16,6 +16,21 @@ $( document ).ready(function() {
 var maxFilesize = 5;
 
 Dropzone.options.fileupload =  {
+    complete: function(file) {
+
+        //Prüfe, ob die Warteschlange abgearbeitet ist
+        if (this.getUploadingFiles().length === 0 && this.getQueuedFiles().length === 0) {
+
+            setTimeout(function() {
+                location.reload();
+            }, 800);
+
+        }
+
+    },
+    error(file, message) {
+        alert("Beim Upload der Datei " +  file.name + " ist folgender Fehler aufgetreten: " + message);
+    },
     accept: function(file, done) {
         
         //Da das Dateilimit bei 5 MB und nicht bei 5 MiB liegen soll, wird hier manuell geprüft.
@@ -46,7 +61,6 @@ Dropzone.options.fileupload =  {
             formData.append("id", result.id)
         }
     },
-
     headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     },
