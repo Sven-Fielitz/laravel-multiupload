@@ -15,13 +15,14 @@ return new class extends Migration
     {
         //Erstellen der Projekttabellen
 
-        Schema::create('file', function (Blueprint $table) {
+        Schema::create('files', function (Blueprint $table) {
             $table->id();
             $table->string('orginal_filename');
-            $table->string('filename');
-            $table->string('title');
-            $table->text('comment');
-            $table->bigInteger("uploadedSize");
+            $table->string('filename')->nullable();
+            $table->string('title')->nullable();
+            $table->enum('status', ['ANNOUNCED', 'UPLOADING', 'COMPLETED', 'CORRUPTED']);
+            $table->text('comment')->nullable();
+            $table->bigInteger("uploadedSize")->default(0);
             $table->bigInteger("fileSize");
             $table->timestamps();
         });

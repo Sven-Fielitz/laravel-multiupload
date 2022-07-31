@@ -18,7 +18,7 @@ Route::get('/', function () {
     return view('index');
 });
 
-Route::prefix('api/upload/file')->controller(UploadController::class)->group(function () {
+Route::prefix('api/file/upload/')->controller(UploadController::class)->group(function () {
 
     Route::post('/receive', 'receive')->name('file.upload');
 

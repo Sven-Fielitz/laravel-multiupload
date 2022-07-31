@@ -20,16 +20,31 @@ Dropzone.options.fileupload =  {
         
         //Da das Dateilimit bei 5 MB und nicht bei 5 MiB liegen soll, wird hier manuell geprüft.
         //Die Option maxFilesize von Dropzone.js kann nur in MiB angegeben werden und ist daher zu ungenau.
-        
+
         if(file.size <= maxFilesize * 1000 * 1000) {
             done();
         } else {
-            done("Die Datei ist zu groß. Die maximale Dateigröße beträgt "+maxFilesize+" MB");
+            done("Die Datei ist zu groß. Die maximale Dateigröße beträgt " + maxFilesize + " MB");
         }
 
     },
     sending: function(file, xhr , formData) {
 
+        //Erstellen der Upload-ID
+        var result = $.ajax({
+            type: "POST",
+            url: "/api/file/upload/announce",
+            data: {
+                filesize: file.size,
+                filename: file.name,
+            },
+            dataType: "json",
+            async: false
+        }).responseJSON;
+
+        if(result.status == "ok") {
+            formData.append("id", result.id)
+        }
     },
 
     headers: {
