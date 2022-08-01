@@ -18,6 +18,9 @@ use App\Http\Controllers\commentController;
 
 Route::get("/", [IndexController::class, "index"]);
 
+Route::get("/comment/{id}", [commentController::class, 'edit'])->name("comment.edit");
+Route::post("/comment/{id}", [commentController::class, 'update'])->name("comment.update");
+
 Route::prefix('api/file/upload/')->controller(UploadController::class)->group(function () {
 
     Route::post('/receive', 'receive')->name('file.upload');

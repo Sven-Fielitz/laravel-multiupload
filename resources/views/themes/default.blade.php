@@ -16,8 +16,9 @@
     <body class="bg-light">
         
         @include('themes.components.header')
-       
+
         <div class="content container mt-4">
+            @include('themes.components.flashMessages')
             @yield('content')
         </div>
         

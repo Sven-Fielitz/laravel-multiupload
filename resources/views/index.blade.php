@@ -10,11 +10,26 @@
         <thead>
             <tr>
                 <th>Dateiname</th>
-                <th>Titel</th>
                 <th>Bemerkung</th>
+                <th>Aktion</th>
             </tr>
         </thead>
         <tbody>
+            @foreach($files as $file)
+                
+                <tr>
+                    <td>
+                        <a target="_blank" href="{{$file->getDownloadLink()}}">{{ $file->orginal_filename }}</a>
+                    </td> 
+                    <td>
+                        {!! nl2br(e($file->comment)) !!}
+                    </td>   
+                    <td>
+                        <a href="{{route('comment.edit', ['id' => $file->id])}}" type="button" class="btn btn-info">Bemerkung verfassen</a>
+                    </td>     
+                </tr>
+
+            @endforeach
         </tbody>
     </table>
 </div>

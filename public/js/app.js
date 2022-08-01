@@ -7,7 +7,7 @@ $( document ).ready(function() {
     });
 
     $("#UploadedFiles").dataTable({
-       
+        responsive: true
     });
 
 });
