@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UploadController;
+use App\Http\Controllers\IndexController;
+use App\Http\Controllers\commentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,9 +16,7 @@ use App\Http\Controllers\UploadController;
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
+Route::get("/", [IndexController::class, "index"]);
 
 Route::prefix('api/file/upload/')->controller(UploadController::class)->group(function () {
 

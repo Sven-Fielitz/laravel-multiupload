@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response;
+use Carbon\Carbon;
 
 use App\Models\File;
 
@@ -43,23 +43,35 @@ class UploadController extends Controller
                 $statusCode = 400;
 
             } else {
-
                 
                 //Upload verarbeitung und Abspeichern
                 $path = $uploadedFile->storeAs("/uploads",  $file->getFilename(), "public");
+
+                $file->status = "COMPLETED";
+                $file->uploaded_at = Carbon::now();
+                $file->save();
+
                 $response["status"] = "ok";
                 $response["type"] = $uploadedFile->extension();
                 $statusCode = 200;
 
             }
 
+            //CORRUPTED Status setzen 
+            if(!empty($response["error_message"]) && $file->status != "COMPLETED") {
+
+                $file->status = "CORRUPTED";
+                $file->save();
+
+            }
+
         } else {
 
-            $response["status"] = "error";
             $response["error_message"] = "Wrong API call";
             $statusCode = 400;
 
         }
+
         return response()->json($response, $statusCode);
     }
 

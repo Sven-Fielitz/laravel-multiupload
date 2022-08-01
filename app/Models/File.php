@@ -20,6 +20,15 @@ class File extends Model
     }
 
     /***
+     * Gibt den Downloadlink zurück
+     */
+    public function getDownloadLink() {
+
+        return url("storage/uploads/". $this->getFilename());
+
+    }
+
+    /***
      * Speichert und generiert einen zufälligen Dateinamen für den Speicherpfad
      */
     public function setRandomFileName()  {
