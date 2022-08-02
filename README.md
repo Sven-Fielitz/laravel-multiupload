@@ -10,6 +10,7 @@ Testumgebung:
 - PHP 8.0.19
 - Apache 2.4.53
 - MariaDB 10.4.24
+- HTTPS / TLS
 
 ## Installation
 

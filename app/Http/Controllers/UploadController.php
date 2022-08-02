@@ -26,7 +26,7 @@ class UploadController extends Controller
             $file = File::find($request->input("id"));
             $uploadedFile = $request->file('file');
 
-            //Validierung des Uplaods
+            //Validierung des Uploads
             if(empty($file) || (!empty($file) && $file->status != "ANNOUNCED")) {
                 
                 $response["error_message"] = "Upload not announced";
@@ -42,10 +42,15 @@ class UploadController extends Controller
                 $response["error_message"] = "File invalid";
                 $statusCode = 400;
 
+            } else if(!$file->checkFileHash($uploadedFile->path())) {
+
+                $response["error_message"] = "Uploaded file is inconsistent";
+                $statusCode = 409;
+
             } else {
                 
                 //Upload verarbeitung und Abspeichern
-                $path = $uploadedFile->storeAs("/uploads",  $file->getFilename(), "public");
+                $path = $uploadedFile->storeAs(config("app.uploadPath"),  $file->getFilename(), "public");
 
                 $file->status = "COMPLETED";
                 $file->uploaded_at = Carbon::now();
@@ -83,7 +88,7 @@ class UploadController extends Controller
         $response["status"] = "error";
         $statusCode = 500; // HTTP-Status - Default auf internal server error
 
-        if($request->has(["filesize", "filename"])) {
+        if($request->has(["filesize", "filename", "filehash"]) && strlen($request->input("filehash")) == 64) {
 
             $fileExtension = @pathinfo($request->input("filename"))["extension"];
 
@@ -103,6 +108,7 @@ class UploadController extends Controller
                 $file->orginal_filename = $request->input("filename");
                 $file->filetype = $fileExtension;
                 $file->fileSize =  $request->input("filesize");
+                $file->filehash =  $request->input("filehash");
                 $file->status = "ANNOUNCED";
                 $file->save();
                 $file->setRandomFileName();
@@ -111,6 +117,7 @@ class UploadController extends Controller
                 $response["id"] = $file->id;
                 $response["filename"] = $file->getFilename();
                 $statusCode = 200;
+
             }
         } else {
 

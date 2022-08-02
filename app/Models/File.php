@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class File extends Model
 {
@@ -25,6 +26,16 @@ class File extends Model
     public function getDownloadLink() {
 
         return url("storage/uploads/". $this->getFilename());
+
+    }
+
+    /***
+     * Gibt den Speicherpfad zurück
+     */
+    public function getStoragePath() {
+
+        return Storage::disk('public')->path(config("app.uploadPath"). $this->getFilename());
+      
 
     }
 
@@ -60,6 +71,18 @@ class File extends Model
 
         }
         return null;
+    }
+
+    /***
+     * Prüft den SHA256-Hash der Datei
+     */
+    public function checkFileHash($path = null) {
+
+        if(empty($path)) $path = $this->getStoragePath();
+        if(!file_exists($path)) return false;
+
+        return hash_file("sha256", $path) === $this->filehash;
+
     }
 
 }

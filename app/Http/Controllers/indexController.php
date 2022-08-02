@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Models\File;
 
-class indexController extends Controller
+class IndexController extends Controller
 {
     /**
      * Display a listing of the resource.

@@ -143,6 +143,8 @@ return [
         // 'store'  => 'redis',
     ],
 
+    'uploadPath' => env('UPLOAD_PATH', 'uploads/'),
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
