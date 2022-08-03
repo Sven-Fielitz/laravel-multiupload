@@ -32,6 +32,7 @@ PHP:
 - Laravel ([Lizenz: MIT](https://github.com/laravel/framework/blob/9.x/LICENSE.md)) 
 
 JavaScript:
+- JQuery ([Lizenz: MIT](https://jquery.org/license/#source-code))
 - DataTables ([Lizenz: MIT](https://datatables.net/license/mit#MIT-license))
 - Dropzone.js ([Lizenz: MIT](https://github.com/dropzone/dropzone/blob/main/LICENSE))
 
